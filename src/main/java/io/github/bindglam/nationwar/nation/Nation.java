@@ -15,12 +15,14 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
 public final class Nation implements Named {
+    @Getter
     private final String name;
+    @Getter
     private final UUID owner;
+    @Getter
     private final Set<Core> ownedCores = new HashSet<>(); // getOwnedCores()로 직접 수정 X (데이터 로드시에만 직접 수정 가능)
+    @Getter
     private final Set<UUID> members = new LinkedHashSet<>(); // getMembers()로 직접 수정 X (데이터 로드시에만 직접 수정 가능)
 
     public Nation(String name, UUID owner) {
