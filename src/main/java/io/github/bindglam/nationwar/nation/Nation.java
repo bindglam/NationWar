@@ -35,6 +35,8 @@ public final class Nation implements Named {
         if(core.getOwnerNation() != null && core.getOwnerNation().getName().equals(name))
             return false; // 이미 점령함
 
+        if(core.getOwnerNation() != null) // 다른 국가가 점령했다면?
+            core.getOwnerNation().getOwnedCores().remove(core);
         core.setOwnerNation(this);
         ownedCores.add(core);
 
