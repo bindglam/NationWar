@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,6 +44,7 @@ public final class MainMenuGui extends InventoryGui {
         if(clickedSlot == MY_PROFILE_SLOT) {
             // TODO
         } else if(clickedSlot == TELEPORT_SLOT) {
+            player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1.2f);
             player.openInventory(new TeleportGui(plugin, player).getInventory());
         }
     }

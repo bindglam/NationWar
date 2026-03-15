@@ -9,6 +9,7 @@ public final class NationWarConfig extends Configuration {
     public final Core core = new Core();
     public final class Core {
         public final Field<Integer> defaultMaxHealth = createPrimitiveField("core.default-max-health", 10000);
+        public final Field<Integer> teleportCooldown = createPrimitiveField("core.teleport-cooldown", 20*60*20);
     }
 
     public NationWarConfig(File file) {
