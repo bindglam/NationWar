@@ -6,13 +6,20 @@ import io.github.bindglam.nationwar.utils.Named;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentIteratorFlag;
+import net.kyori.adventure.text.ComponentIteratorType;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Unmodifiable;
 
+import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public final class Nation implements Named {
@@ -45,15 +52,44 @@ public final class Nation implements Named {
         getOnlineMembers().forEach(member -> {
             // TODO : 좀 더 화려한 이펙트
             // TODO : 디스코드 알림
-            member.showTitle(Title.title(
+            member.playSound(member, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5f, 1.2f);
+
+            showOccupationTitleEffect(member,
                     Component.text("[ ").color(NamedTextColor.AQUA).append(Component.text("신상 안내").color(NamedTextColor.WHITE)).append(Component.text(" ]").color(NamedTextColor.AQUA)),
                     Component.text("<< ").color(NamedTextColor.AQUA)
-                            .append(Component.text(whoOccupied.getName() + "님께서 " + core.getName() + " 신상을 점령하셨습니다 >>").color(NamedTextColor.WHITE))
+                            .append(Component.text(whoOccupied.getName() + "님께서 " + core.getName() + " 신상을 점령하셨습니다").color(NamedTextColor.WHITE))
                             .append(Component.text(" >>").color(NamedTextColor.AQUA))
-            ));
+            );
         });
 
         return true;
+    }
+
+    private void showOccupationTitleEffect(Player player, TextComponent title, TextComponent subTitle) {
+        // Blink 두 번 반복
+        for(int i = 0; i <= 2; i+=2) {
+            Bukkit.getAsyncScheduler().runDelayed(NationWar.get(), task -> {
+                player.showTitle(Title.title(
+                        title,
+                        Component.empty(),
+                        Title.Times.times(Duration.ZERO, Duration.ofMillis(750), Duration.ZERO)
+                ));
+            }, 10L*50L*i, TimeUnit.MILLISECONDS);
+            Bukkit.getAsyncScheduler().runDelayed(NationWar.get(), task -> {
+                player.showTitle(Title.title(
+                        Component.empty(),
+                        Component.empty(),
+                        Title.Times.times(Duration.ZERO, Duration.ofMillis(750), Duration.ZERO)
+                ));
+            }, 10L*50L*(i+1), TimeUnit.MILLISECONDS);
+        }
+        Bukkit.getAsyncScheduler().runDelayed(NationWar.get(), task -> {
+            player.showTitle(Title.title(
+                    title,
+                    subTitle,
+                    Title.Times.times(Duration.ZERO, Duration.ofSeconds(2), Duration.ofSeconds(1))
+            ));
+        }, 10L*50L*4, TimeUnit.MILLISECONDS);
     }
 
     public boolean deoccupyCore(Core core) {
