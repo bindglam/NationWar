@@ -40,10 +40,10 @@ public final class Nation implements Named {
             // TODO : 좀 더 화려한 이펙트
             // TODO : 디스코드 알림
             member.showTitle(Title.title(
+                    Component.text("[ ").color(NamedTextColor.AQUA).append(Component.text("신상 안내").color(NamedTextColor.WHITE)).append(Component.text(" ]").color(NamedTextColor.AQUA)),
                     Component.text("<< ").color(NamedTextColor.AQUA)
                             .append(Component.text(whoOccupied.getName() + "님께서 " + core.getName() + " 신상을 점령하셨습니다 >>").color(NamedTextColor.WHITE))
-                            .append(Component.text(" >>").color(NamedTextColor.AQUA)),
-                    Component.empty()
+                            .append(Component.text(" >>").color(NamedTextColor.AQUA))
             ));
         });
 
