@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public final class NationManager implements Managerial {
@@ -69,5 +70,9 @@ public final class NationManager implements Managerial {
 
         nations.put(nation.getName(), nation);
         return true;
+    }
+
+    public @Nullable Nation getNationByMember(UUID memberUUID) {
+        return nations.values().stream().filter(nation -> nation.getMembers().contains(memberUUID)).findFirst().orElse(null);
     }
 }
