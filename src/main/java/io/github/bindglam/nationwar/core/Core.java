@@ -16,14 +16,7 @@ public final class Core implements Named {
     @Getter
     private final int maxHealth;
     @Getter @Setter
-    private Nation ownerNation = null; // 신상 소유 국가
-
-    public Core(String name, Location location, int maxHealth) {
-        this.name = name;
-        this.location = location;
-        this.health = maxHealth;
-        this.maxHealth = maxHealth;
-    }
+    private Nation ownerNation; // 신상 소유 국가
 
     public Core(String name, Location location, int health, int maxHealth, Nation ownerNation) {
         this.name = name;
@@ -31,5 +24,9 @@ public final class Core implements Named {
         this.health = health;
         this.maxHealth = maxHealth;
         this.ownerNation = ownerNation;
+    }
+
+    public Core(String name, Location location, int maxHealth) {
+        this(name, location, maxHealth, maxHealth, null);
     }
 }
