@@ -39,6 +39,14 @@ public final class Canvas {
         }
     }
 
+    public void box(int x1, int y1, int x2, int y2, ItemStack itemStack) {
+        for(int y = y1; y <= y2; y++) {
+            for(int x = x1; x <= x2; x++) {
+                pixel(x, y, itemStack);
+            }
+        }
+    }
+
     public void boxOutline(int x1, int y1, int x2, int y2, ItemStack itemStack) {
         for (int x = x1; x <= x2; x++) {
             pixel(x, y1, itemStack);

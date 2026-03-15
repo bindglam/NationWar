@@ -2,6 +2,7 @@ package io.github.bindglam.nationwar.core;
 
 import io.github.bindglam.nationwar.Context;
 import io.github.bindglam.nationwar.Managerial;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -50,6 +51,10 @@ public final class CoreManager implements Managerial {
             tasks.join();
             context.logger().info("신상 데이터 저장 완료!");
         }
+    }
+
+    public @Unmodifiable Map<String, Core> getCores() {
+        return Map.copyOf(cores);
     }
 
     public boolean registerCore(Core core) {
