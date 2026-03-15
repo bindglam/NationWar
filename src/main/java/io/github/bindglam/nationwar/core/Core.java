@@ -6,13 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 
-@Getter
-@Setter
 public final class Core implements Named {
+    @Getter
     private final String name;
+    @Getter
     private final Location location; // 신상은 서버 시작시에 설정, 고정
+    @Getter @Setter
     private int health;
+    @Getter
     private final int maxHealth;
+    @Getter @Setter
     private Nation ownerNation = null; // 신상 소유 국가
 
     public Core(String name, Location location, int maxHealth) {
