@@ -36,7 +36,8 @@ public final class CoreCommand implements CommandRegistrar {
                 }));
         commands.command(commands.commandBuilder("신상")
                 .permission(Permission.of("nationwar.admin"))
-                .literal("체력리셋")
+                .literal("체력")
+                .literal("리셋")
                 .required("이름", StringParser.quotedStringParser())
                 .handler(ctx -> {
                     Core core = context.plugin().getCoreManager().getCore(ctx.get("이름"));
