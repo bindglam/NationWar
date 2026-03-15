@@ -49,15 +49,15 @@ public final class Nation implements Named {
         core.setOwnerNation(this);
         ownedCores.add(core);
 
-        getOnlineMembers().forEach(member -> {
-            // TODO : 좀 더 화려한 이펙트
-            // TODO : 디스코드 알림
-            member.playSound(member, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5f, 1.2f);
+        // TODO : 디스코드 알림
 
-            showOccupationTitleEffect(member,
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5f, 1.2f);
+
+            showOccupationTitleEffect(player,
                     Component.text("[ ").color(NamedTextColor.AQUA).append(Component.text("신상 안내").color(NamedTextColor.WHITE)).append(Component.text(" ]").color(NamedTextColor.AQUA)),
                     Component.text("<< ").color(NamedTextColor.AQUA)
-                            .append(Component.text(whoOccupied.getName() + "님께서 " + core.getName() + " 신상을 점령하셨습니다").color(NamedTextColor.WHITE))
+                            .append(Component.text("'" + name + "'의 " + whoOccupied.getName() + "님께서 " + core.getName() + " 신상을 점령하셨습니다").color(NamedTextColor.WHITE))
                             .append(Component.text(" >>").color(NamedTextColor.AQUA))
             );
         });
