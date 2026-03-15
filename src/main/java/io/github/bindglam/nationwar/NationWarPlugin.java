@@ -2,6 +2,7 @@ package io.github.bindglam.nationwar;
 
 import io.github.bindglam.nationwar.command.CommandManager;
 import io.github.bindglam.nationwar.database.DatabaseManager;
+import io.github.bindglam.nationwar.listeners.MainMenuGuiListener;
 import io.github.bindglam.nationwar.nation.NationManager;
 import io.github.bindglam.nationwar.core.CoreManager;
 import lombok.Getter;
@@ -36,6 +37,8 @@ public final class NationWarPlugin extends JavaPlugin {
         nationManager.start(context);
         coreManager.start(context);
         commandManager.start(context);
+
+        getServer().getPluginManager().registerEvents(new MainMenuGuiListener(this), this);
     }
 
     @Override
