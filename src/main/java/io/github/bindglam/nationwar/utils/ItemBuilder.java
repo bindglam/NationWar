@@ -6,8 +6,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public final class ItemBuilder {
     private final ItemStack itemStack;
@@ -28,6 +30,19 @@ public final class ItemBuilder {
 
     public ItemBuilder lore(Component... lore) {
         return lore(Arrays.stream(lore).toList());
+    }
+
+    public ItemBuilder addLore(List<Component> newLore) {
+        itemStack.editMeta(meta -> {
+            List<Component> lore = new ArrayList<>(meta.hasLore() ? Objects.requireNonNull(meta.lore()) : List.of());
+            lore.addAll(newLore);
+            meta.lore(lore);
+        });
+        return this;
+    }
+
+    public ItemBuilder addLore(Component... newLore) {
+        return addLore(Arrays.stream(newLore).toList());
     }
 
     public <P, C> ItemBuilder persistentData(NamespacedKey key, PersistentDataType<P, C> type, C value) {
