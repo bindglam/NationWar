@@ -34,5 +34,19 @@ public final class CoreCommand implements CommandRegistrar {
                         ctx.sender().sendMessage(Component.text("성공적으로 '" + name + "' 신상을 등록했습니다.").color(NamedTextColor.GREEN));
                     }
                 }));
+        commands.command(commands.commandBuilder("신상")
+                .permission(Permission.of("nationwar.admin"))
+                .literal("체력리셋")
+                .required("이름", StringParser.quotedStringParser())
+                .handler(ctx -> {
+                    Core core = context.plugin().getCoreManager().getCore(ctx.get("이름"));
+                    if(core == null) {
+                        ctx.sender().sendMessage(Component.text("알 수 없는 신상입니다.").color(NamedTextColor.RED));
+                        return;
+                    }
+
+                    core.setHealth(core.getMaxHealth());
+                    ctx.sender().sendMessage(Component.text("성공적으로 해당 신상의 체력을 초기화했습니다.").color(NamedTextColor.GREEN));
+                }));
     }
 }
