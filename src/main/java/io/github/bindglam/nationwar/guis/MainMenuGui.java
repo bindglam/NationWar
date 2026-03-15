@@ -1,5 +1,6 @@
 package io.github.bindglam.nationwar.guis;
 
+import io.github.bindglam.nationwar.NationWarPlugin;
 import io.github.bindglam.nationwar.utils.ComponentUtil;
 import io.github.bindglam.nationwar.utils.InventoryUtil;
 import io.github.bindglam.nationwar.utils.ItemBuilder;
@@ -16,13 +17,16 @@ public final class MainMenuGui extends InventoryGui {
     private static final int MY_PROFILE_SLOT = InventoryUtil.toSlotIndex(1, 1);
     private static final int TELEPORT_SLOT = InventoryUtil.toSlotIndex(3, 1);
 
-    public MainMenuGui(JavaPlugin plugin, Player player) {
+    private final NationWarPlugin plugin;
+
+    public MainMenuGui(NationWarPlugin plugin, Player player) {
         super(plugin, 9*3, Component.text("MAIN MENU"));
+        this.plugin = plugin;
 
         canvas.fill(ItemStackConstants.FILLED);
 
         canvas.pixel(MY_PROFILE_SLOT, ItemBuilder.of(InventoryUtil.createPlayerHead(player))
-                .displayName(ComponentUtil.componentNonItalic("내 프로필").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD))
+                .displayName(ComponentUtil.componentNonItalic("내 프로필").color(NamedTextColor.WHITE).decorate(TextDecoration.BOLD))
                 .build());
         canvas.pixel(TELEPORT_SLOT, ItemBuilder.of(Material.CAMPFIRE)
                 .displayName(ComponentUtil.componentNonItalic("특정 구역으로 텔레포트").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD))
@@ -39,7 +43,7 @@ public final class MainMenuGui extends InventoryGui {
         if(clickedSlot == MY_PROFILE_SLOT) {
             // TODO
         } else if(clickedSlot == TELEPORT_SLOT) {
-            // TODO
+            player.openInventory(new TeleportGui(plugin, player).getInventory());
         }
     }
 }
